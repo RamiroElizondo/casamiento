@@ -70,7 +70,25 @@ export default async function handler(req, res) {
     });
   }
 
-  // 3. Verificar que la playlist existe y es accesible
+  // 3. Verificar identidad del usuario autenticado
+  let meId = null;
+  try {
+    const meRes = await fetch('https://api.spotify.com/v1/me', {
+      headers: { Authorization: 'Bearer ' + accessToken }
+    });
+    const meData = await meRes.json();
+    meId = meData.id;
+    results.push({
+      check: 'Usuario autenticado (dueño del token)',
+      spotify_id: meData.id,
+      nombre: meData.display_name,
+      email: meData.email
+    });
+  } catch (err) {
+    results.push({ check: 'Usuario autenticado', status: '✗ ' + err.message });
+  }
+
+  // 4. Verificar que la playlist existe y es accesible
   if (PLAYLIST_ID) {
     try {
       const plRes = await fetch(`https://api.spotify.com/v1/playlists/${PLAYLIST_ID}?fields=id,name,owner,public`, {
@@ -89,11 +107,18 @@ export default async function handler(req, res) {
             : 'Error al acceder a la playlist.'
         });
       } else {
+        const ownerId = plData.owner?.id;
+        const ownerMatch = meId && ownerId && meId === ownerId;
         results.push({
           check: 'Playlist',
-          status: '✓ OK',
+          status: ownerMatch ? '✓ OK — el dueño coincide con el token' : '✗ PROBLEMA — dueños no coinciden',
           nombre: plData.name,
-          owner: plData.owner?.display_name,
+          owner_nombre: plData.owner?.display_name,
+          owner_id: ownerId,
+          token_user_id: meId,
+          coinciden: ownerMatch
+            ? 'SÍ ✓'
+            : `NO ✗ — la playlist es de "${ownerId}" pero el token es de "${meId}". Tenés que loguearte con la cuenta "${ownerId}" cuando corrés get-refresh-token.js`,
           publica: plData.public
         });
       }
