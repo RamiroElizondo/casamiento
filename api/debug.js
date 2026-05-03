@@ -37,7 +37,8 @@ export default async function handler(req, res) {
       },
       body: new URLSearchParams({
         grant_type: 'refresh_token',
-        refresh_token: REFRESH_TOKEN
+        refresh_token: REFRESH_TOKEN,
+        scope: 'playlist-modify-public playlist-modify-private playlist-read-private playlist-read-collaborative user-read-private user-read-email'
       })
     });
 
@@ -148,7 +149,7 @@ export default async function handler(req, res) {
         codigo: addRes.status,
         error: addErr,
         solucion: addRes.status === 403
-          ? 'Tu cuenta no tiene permiso para modificar esta playlist. La playlist tiene que ser tuya (creada con la misma cuenta que generó el refresh token).'
+          ? 'Sin permiso para modificar la playlist. Causas posibles: (1) la playlist no es tuya — tiene que ser de la misma cuenta con la que corriste get-refresh-token.js, (2) Spotify requiere "Extended Quota Mode" aprobado para apps en Development Mode (restricción de nov-2024). Verificá dueño de la playlist en el check anterior.'
           : addRes.status === 404
           ? 'Playlist no encontrada. Verificá el PLAYLIST_ID.'
           : 'Error desconocido al agregar.'

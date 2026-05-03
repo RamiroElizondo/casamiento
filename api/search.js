@@ -19,7 +19,7 @@ async function getAccessToken() {
   const body = new URLSearchParams({
     grant_type: 'refresh_token',
     refresh_token: REFRESH_TOKEN,
-    scope: 'playlist-modify-public playlist-modify-private playlist-read-private playlist-read-collaborative'
+    scope: 'playlist-modify-public playlist-modify-private playlist-read-private playlist-read-collaborative user-read-private user-read-email'
   });
 
   const res = await fetch('https://accounts.spotify.com/api/token', {
