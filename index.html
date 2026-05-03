@@ -505,130 +505,37 @@
     margin-right: auto;
   }
 
-  .search-box {
-    display: flex;
-    gap: 0.5rem;
-    margin-bottom: 1.25rem;
-    position: relative;
+  .spotify-embed {
+    display: block;
+    width: 100%;
+    height: 300px;
+    border: none;
   }
-  .search-box input {
-    flex: 1;
-    padding: 0.85rem 1rem 0.85rem 2.5rem;
-    border: 1px solid var(--beige);
-    background: var(--cream);
-    font-family: var(--serif);
-    font-size: 1rem;
-    color: var(--ink);
-    outline: none;
-    transition: border-color 0.3s;
-  }
-  .search-box input:focus { border-color: var(--gold); }
-  .search-box input::placeholder { color: rgba(74, 63, 46, 0.5); font-style: italic; }
-  .search-box .search-icon {
-    position: absolute;
-    left: 0.85rem;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 18px; height: 18px;
-    color: var(--gold-deep);
-    pointer-events: none;
+  @media (min-width: 600px) {
+    .spotify-embed { height: 380px; }
   }
 
-  .search-results {
-    list-style: none;
-    max-height: 440px;
-    overflow-y: auto;
+  .spotify-cta {
+    text-align: center;
+    margin-top: 1.75rem;
   }
-  .search-results::-webkit-scrollbar { width: 4px; }
-  .search-results::-webkit-scrollbar-thumb { background: var(--gold); }
-
-  .track-item {
-    display: flex;
-    align-items: center;
-    gap: 0.85rem;
-    padding: 0.75rem;
-    border-bottom: 1px solid rgba(184, 146, 79, 0.15);
-    transition: background 0.2s;
-  }
-  .track-item:hover { background: rgba(217, 201, 168, 0.2); }
-  .track-cover {
-    width: 48px; height: 48px;
-    background: var(--beige-soft);
-    flex-shrink: 0;
-    object-fit: cover;
-  }
-  .track-info { flex: 1; min-width: 0; }
-  .track-name {
-    font-family: var(--serif);
-    font-size: 0.95rem;
-    color: var(--ink);
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-  .track-artist {
-    font-size: 0.8rem;
-    color: var(--ink-soft);
-    font-style: italic;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-  .btn-add {
-    flex-shrink: 0;
-    width: 36px; height: 36px;
-    border-radius: 50%;
+  .btn-spotify {
+    display: inline-block;
+    padding: 0.85rem 2.25rem;
     border: 1px solid var(--gold);
     background: transparent;
     color: var(--gold-deep);
-    font-size: 1.25rem;
-    cursor: pointer;
-    transition: all 0.2s;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .btn-add:hover { background: var(--gold); color: var(--cream); }
-  .btn-add.added { background: var(--gold-deep); color: var(--cream); border-color: var(--gold-deep); }
-  .btn-add:disabled { cursor: default; }
-
-  .empty-state {
-    text-align: center;
-    padding: 2rem 1rem;
-    color: var(--ink-soft);
-    font-style: italic;
-    opacity: 0.7;
-  }
-
-  .spotify-status {
-    text-align: center;
-    margin-top: 1rem;
-    font-family: var(--smallcaps);
-    font-size: 0.8rem;
-    letter-spacing: 0.2em;
-    color: var(--gold-deep);
-    min-height: 1.2rem;
-    transition: opacity 0.3s;
-  }
-
-  .toast {
-    position: fixed;
-    bottom: 2rem;
-    left: 50%;
-    transform: translateX(-50%) translateY(100px);
-    background: var(--ink);
-    color: var(--cream);
-    padding: 0.85rem 1.5rem;
     font-family: var(--smallcaps);
     font-size: 0.85rem;
-    letter-spacing: 0.2em;
+    letter-spacing: 0.35em;
     text-transform: uppercase;
-    z-index: 100;
-    box-shadow: var(--shadow-deep);
-    transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
-    border-left: 3px solid var(--gold);
+    text-decoration: none;
+    transition: background 0.3s, color 0.3s;
   }
-  .toast.show { transform: translateX(-50%) translateY(0); }
+  .btn-spotify:hover {
+    background: var(--gold);
+    color: var(--paper);
+  }
 
   /* FOOTER */
   footer {
@@ -828,33 +735,29 @@
 <section class="spotify-section">
   <div class="section-title reveal">
     <div class="ornament">· · ·</div>
-    <h2>Sumá tu canción</h2>
-    <div class="sub">la playlist de la fiesta</div>
+    <h2>La playlist de la fiesta</h2>
   </div>
 
   <div class="spotify-card reveal">
     <p class="spotify-intro">
-      Buscá las canciones que no pueden faltar en la pista.
-      Vamos a bailar al ritmo de las elecciones de todos.
+      Estas son las canciones que van a sonar en la pista. Seguí la playlist en Spotify para no perderte nada.
     </p>
 
-    <div class="search-box">
-      <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <circle cx="11" cy="11" r="8"/>
-        <path d="m21 21-4.35-4.35"/>
-      </svg>
-      <input type="text" id="search-input" placeholder="Buscá una canción o artista..." />
+    <iframe class="spotify-embed"
+      src="https://open.spotify.com/embed/playlist/6wOp0HIGzFTbAoHxEDWbPB?utm_source=generator&theme=0"
+      width="100%"
+      frameborder="0"
+      allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+      loading="lazy"
+    ></iframe>
+
+    <div class="spotify-cta">
+      <a href="https://open.spotify.com/playlist/6wOp0HIGzFTbAoHxEDWbPB" target="_blank" rel="noopener noreferrer" class="btn-spotify">
+        Abrir en Spotify
+      </a>
     </div>
-
-    <ul class="search-results" id="search-results">
-      <li class="empty-state">Empezá a escribir para buscar canciones</li>
-    </ul>
-
-    <div class="spotify-status" id="spotify-status"></div>
   </div>
 </section>
-
-<div class="toast" id="toast"></div>
 
 <footer>
   <div class="ornament">· · ·</div>
@@ -915,112 +818,6 @@
   }, { threshold: 0.15 });
   document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 
-  /* ═══════════════════════════════════════════════════════════════
-     SPOTIFY — vía backend serverless
-     ═══════════════════════════════════════════════════════════════ */
-  const searchInput = document.getElementById('search-input');
-  const searchResults = document.getElementById('search-results');
-  const statusEl = document.getElementById('spotify-status');
-  const toastEl = document.getElementById('toast');
-
-  function setStatus(msg) { statusEl.textContent = msg; }
-
-  function showToast(msg) {
-    toastEl.textContent = msg;
-    toastEl.classList.add('show');
-    setTimeout(() => toastEl.classList.remove('show'), 3000);
-  }
-
-  function escapeHtml(s) {
-    return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-  }
-
-  // Búsqueda con debounce
-  let searchTimer;
-  let searchSeq = 0;
-  searchInput.addEventListener('input', (e) => {
-    clearTimeout(searchTimer);
-    const q = e.target.value.trim();
-    if (!q) {
-      searchResults.innerHTML = '<li class="empty-state">Empezá a escribir para buscar canciones</li>';
-      setStatus('');
-      return;
-    }
-    searchTimer = setTimeout(() => searchTracks(q), 350);
-  });
-
-  async function searchTracks(query) {
-    const seq = ++searchSeq;
-    setStatus('Buscando…');
-    try {
-      const res = await fetch('/api/search?q=' + encodeURIComponent(query));
-      if (seq !== searchSeq) return; // resultado obsoleto
-      if (!res.ok) {
-        const err = await res.json().catch(() => ({}));
-        setStatus(err.error || 'Error al buscar');
-        return;
-      }
-      const data = await res.json();
-      renderTracks(data.tracks || []);
-      setStatus('');
-    } catch (err) {
-      setStatus('Sin conexión');
-    }
-  }
-
-  function renderTracks(tracks) {
-    searchResults.innerHTML = '';
-    if (!tracks.length) {
-      searchResults.innerHTML = '<li class="empty-state">Sin resultados</li>';
-      return;
-    }
-    tracks.forEach(t => {
-      const li = document.createElement('li');
-      li.className = 'track-item';
-      li.innerHTML = `
-        <img class="track-cover" src="${escapeHtml(t.cover || '')}" alt="" />
-        <div class="track-info">
-          <div class="track-name">${escapeHtml(t.name)}</div>
-          <div class="track-artist">${escapeHtml(t.artists)}</div>
-        </div>
-        <button class="btn-add" data-uri="${escapeHtml(t.uri)}" data-name="${escapeHtml(t.name)}" aria-label="Agregar">+</button>
-      `;
-      searchResults.appendChild(li);
-    });
-  }
-
-  // Agregar a la playlist
-  searchResults.addEventListener('click', async (e) => {
-    const btn = e.target.closest('.btn-add');
-    if (!btn || btn.disabled) return;
-    const uri = btn.dataset.uri;
-    const name = btn.dataset.name;
-
-    btn.disabled = true;
-    btn.textContent = '…';
-
-    try {
-      const res = await fetch('/api/add-track', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ uri })
-      });
-      if (res.ok) {
-        btn.textContent = '✓';
-        btn.classList.add('added');
-        showToast(`"${name}" agregada ✓`);
-      } else {
-        const err = await res.json().catch(() => ({}));
-        btn.disabled = false;
-        btn.textContent = '+';
-        showToast(err.error || 'No se pudo agregar');
-      }
-    } catch (err) {
-      btn.disabled = false;
-      btn.textContent = '+';
-      showToast('Sin conexión');
-    }
-  });
 </script>
 
 </body>
