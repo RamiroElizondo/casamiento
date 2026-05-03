@@ -77,6 +77,54 @@ const server = http.createServer(async (req, res) => {
 
   console.log('\nToken obtenido.');
   console.log('Scopes concedidos: ' + (data.scope || '(ninguno — revisar app en Spotify Dashboard)'));
+  console.log('REFRESH_TOKEN primeros 20 chars: ' + (data.refresh_token?.slice(0, 20) || '(null)'));
+
+  // ── DIAGNÓSTICO TEMPRANO ──────────────────────────────────────────────────
+  // Si se pasa PLAYLIST_ID como env var, testea add-track inmediatamente
+  // con este token fresco, antes de cualquier otra lógica.
+  // Uso: $env:PLAYLIST_ID="tu_id"; node scripts/get-refresh-token.js
+  const DIAG_PLAYLIST_ID = process.env.PLAYLIST_ID || '';
+  if (DIAG_PLAYLIST_ID) {
+    console.log('\n── DIAGNÓSTICO DIRECTO ──────────────────────────────────────────');
+    console.log('POST /v1/playlists/' + DIAG_PLAYLIST_ID + '/tracks ...');
+    const diagAddRes = await fetch(`https://api.spotify.com/v1/playlists/${DIAG_PLAYLIST_ID}/tracks`, {
+      method: 'POST',
+      headers: {
+        'Authorization': 'Bearer ' + data.access_token,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ uris: ['spotify:track:4uLU6hMCjMI75M1A2tKUQC'] })
+    });
+    const diagAddBody = await diagAddRes.json().catch(async () => ({ raw: await diagAddRes.text().catch(() => '') }));
+    console.log('TEST ADD-TRACK:', diagAddRes.status, JSON.stringify(diagAddBody));
+
+    if (!diagAddRes.ok) {
+      console.log('\nGET /v1/playlists/' + DIAG_PLAYLIST_ID + ' (atributos completos)...');
+      const diagPlRes = await fetch(`https://api.spotify.com/v1/playlists/${DIAG_PLAYLIST_ID}`, {
+        headers: { Authorization: 'Bearer ' + data.access_token }
+      });
+      const diagPlBody = await diagPlRes.json().catch(async () => ({ raw: await diagPlRes.text().catch(() => '') }));
+      console.log('GET PLAYLIST (' + diagPlRes.status + '):', JSON.stringify({
+        id: diagPlBody.id,
+        name: diagPlBody.name,
+        public: diagPlBody.public,
+        collaborative: diagPlBody.collaborative,
+        owner: diagPlBody.owner,
+        snapshot_id: diagPlBody.snapshot_id,
+        tracks: diagPlBody.tracks ? { total: diagPlBody.tracks.total } : undefined,
+        error: diagPlBody.error
+      }, null, 2));
+    } else {
+      await fetch(`https://api.spotify.com/v1/playlists/${DIAG_PLAYLIST_ID}/tracks`, {
+        method: 'DELETE',
+        headers: { Authorization: 'Bearer ' + data.access_token, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ tracks: [{ uri: 'spotify:track:4uLU6hMCjMI75M1A2tKUQC' }] })
+      });
+      console.log('Canción de prueba removida. ✓ add-track funciona con este token.');
+    }
+    console.log('────────────────────────────────────────────────────────────────\n');
+  }
+  // ─────────────────────────────────────────────────────────────────────────
 
   // Obtener el user ID
   const meRes = await fetch('https://api.spotify.com/v1/me', {

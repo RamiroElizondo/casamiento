@@ -72,6 +72,9 @@ async function getPlaylistTrackUris(token, playlistId) {
 }
 
 export default async function handler(req, res) {
+  console.log('REFRESH_TOKEN primeros 20 chars:', process.env.REFRESH_TOKEN?.slice(0, 20) ?? '(no seteado)');
+  console.log('PLAYLIST_ID:', process.env.PLAYLIST_ID ?? '(no seteado)');
+
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Método no permitido' });
   }
