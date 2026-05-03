@@ -1,0 +1,12 @@
+{
+  "name": "casamiento-sofia-mateo",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "get-token": "node scripts/get-refresh-token.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
