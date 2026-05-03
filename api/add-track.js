@@ -42,7 +42,13 @@ async function getAccessToken() {
     },
     body
   });
-  if (!res.ok) throw new Error('Error al refrescar token');
+  if (!res.ok) {
+    const errData = await res.json().catch(() => ({}));
+    console.error('Spotify token error:', res.status, JSON.stringify(errData));
+    if (res.status === 400) throw new Error('REFRESH_TOKEN inválido o expirado — corré get-refresh-token.js de nuevo');
+    if (res.status === 401) throw new Error('CLIENT_ID o CLIENT_SECRET incorrectos');
+    throw new Error(`Error Spotify ${res.status}: ${JSON.stringify(errData)}`);
+  }
   const data = await res.json();
   cachedToken = data.access_token;
   cachedTokenExpires = Date.now() + (data.expires_in * 1000);
@@ -104,14 +110,19 @@ export default async function handler(req, res) {
     });
 
     if (!r.ok) {
-      const txt = await r.text();
-      console.error('Spotify add error:', r.status, txt);
-      return res.status(502).json({ error: 'No se pudo agregar' });
+      const errData = await r.json().catch(async () => ({ raw: await r.text() }));
+      console.error('Spotify add-track error:', r.status, JSON.stringify(errData));
+      const msg = r.status === 403
+        ? 'Sin permisos: la playlist tiene que ser tuya (misma cuenta que generó el refresh token)'
+        : r.status === 404
+        ? 'Playlist no encontrada, verificá PLAYLIST_ID'
+        : `Error Spotify ${r.status}`;
+      return res.status(502).json({ error: msg });
     }
 
     return res.status(200).json({ ok: true });
   } catch (err) {
-    console.error(err);
-    return res.status(500).json({ error: 'Error del servidor' });
+    console.error('add-track catch:', err.message);
+    return res.status(500).json({ error: err.message || 'Error del servidor' });
   }
 }
