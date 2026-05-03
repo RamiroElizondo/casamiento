@@ -15,7 +15,7 @@ import { exec } from 'node:child_process';
 const CLIENT_ID = process.env.CLIENT_ID || 'PEGA_TU_CLIENT_ID_ACA';
 const CLIENT_SECRET = process.env.CLIENT_SECRET || 'PEGA_TU_CLIENT_SECRET_ACA';
 const REDIRECT_URI = 'http://127.0.0.1:8888/callback';
-const SCOPES = 'playlist-modify-public playlist-modify-private';
+const SCOPES = 'playlist-modify-public playlist-modify-private playlist-read-private playlist-read-collaborative';
 const PORT = 8888;
 
 if (CLIENT_ID.startsWith('PEGA_') || CLIENT_SECRET.startsWith('PEGA_')) {
@@ -80,15 +80,62 @@ const server = http.createServer(async (req, res) => {
   res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
   res.end(html);
 
+  // Obtener el user ID
+  const meRes = await fetch('https://api.spotify.com/v1/me', {
+    headers: { Authorization: 'Bearer ' + data.access_token }
+  });
+  const me = await meRes.json();
+  const userId = me.id;
+
+  // Crear la playlist directamente (privada para evitar el bug de 403 con públicas)
+  const plRes = await fetch(`https://api.spotify.com/v1/users/${userId}/playlists`, {
+    method: 'POST',
+    headers: {
+      Authorization: 'Bearer ' + data.access_token,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      name: '🎵 Playlist del Casamiento',
+      description: 'Las canciones elegidas por nuestros invitados',
+      public: false,      // privada evita el bug 403 de Spotify con playlists públicas
+      collaborative: false
+    })
+  });
+  const pl = await plRes.json();
+  const playlistId = pl.id;
+
+  // Test: agregar una canción de prueba y sacarla
+  let testOk = false;
+  if (playlistId) {
+    const addRes = await fetch(`https://api.spotify.com/v1/playlists/${playlistId}/tracks`, {
+      method: 'POST',
+      headers: { Authorization: 'Bearer ' + data.access_token, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ uris: ['spotify:track:4uLU6hMCjMI75M1A2tKUQC'] })
+    });
+    if (addRes.ok) {
+      await fetch(`https://api.spotify.com/v1/playlists/${playlistId}/tracks`, {
+        method: 'DELETE',
+        headers: { Authorization: 'Bearer ' + data.access_token, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ tracks: [{ uri: 'spotify:track:4uLU6hMCjMI75M1A2tKUQC' }] })
+      });
+      testOk = true;
+    }
+  }
+
   console.log('\n══════════════════════════════════════════════════════════════');
-  console.log('  ✓ Refresh token obtenido');
+  console.log('  ✓ Todo listo' + (testOk ? ' — permisos verificados' : ''));
   console.log('══════════════════════════════════════════════════════════════\n');
-  console.log('Guardá estos valores como variables de entorno en Vercel:\n');
+  if (playlistId) {
+    console.log('  ✓ Playlist creada: "🎵 Playlist del Casamiento"');
+    console.log('    Abrila en: https://open.spotify.com/playlist/' + playlistId);
+    console.log('    (Es privada para evitar el bug 403 de Spotify. Podés hacerla pública desde la app luego.)\n');
+  }
+  console.log('Pegá estos valores en Vercel → Settings → Environment Variables:\n');
   console.log('  CLIENT_ID     = ' + CLIENT_ID);
   console.log('  CLIENT_SECRET = ' + CLIENT_SECRET);
   console.log('  REFRESH_TOKEN = ' + data.refresh_token);
-  console.log('  PLAYLIST_ID   = (el ID de tu playlist)\n');
-  console.log('══════════════════════════════════════════════════════════════\n');
+  console.log('  PLAYLIST_ID   = ' + (playlistId || '(creá la playlist manualmente)'));
+  console.log('\n══════════════════════════════════════════════════════════════\n');
 
   server.close();
   process.exit(0);

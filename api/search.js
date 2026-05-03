@@ -18,7 +18,8 @@ async function getAccessToken() {
   const basic = Buffer.from(`${CLIENT_ID}:${CLIENT_SECRET}`).toString('base64');
   const body = new URLSearchParams({
     grant_type: 'refresh_token',
-    refresh_token: REFRESH_TOKEN
+    refresh_token: REFRESH_TOKEN,
+    scope: 'playlist-modify-public playlist-modify-private playlist-read-private playlist-read-collaborative'
   });
 
   const res = await fetch('https://accounts.spotify.com/api/token', {
