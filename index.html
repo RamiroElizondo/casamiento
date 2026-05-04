@@ -471,7 +471,7 @@
   /* SPOTIFY */
   .spotify-section {
     padding: 4rem 1.5rem 8rem;
-    max-width: 720px;
+    max-width: 960px;
     margin: 0 auto;
     position: relative;
     z-index: 2;
@@ -495,47 +495,71 @@
     pointer-events: none;
   }
 
-  .spotify-intro {
-    text-align: center;
-    margin-bottom: 2rem;
-    font-style: italic;
-    color: var(--ink-soft);
-    max-width: 420px;
-    margin-left: auto;
-    margin-right: auto;
+  .spotify-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+  @media (min-width: 768px) {
+    .spotify-grid {
+      grid-template-columns: 60fr 40fr;
+      align-items: center;
+    }
   }
 
   .spotify-embed {
     display: block;
     width: 100%;
-    height: 300px;
+    height: 280px;
     border: none;
   }
-  @media (min-width: 600px) {
+  @media (min-width: 768px) {
     .spotify-embed { height: 380px; }
   }
 
-  .spotify-cta {
+  .spotify-side {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     text-align: center;
-    margin-top: 1.75rem;
+    gap: 1.25rem;
   }
+
+  .spotify-side-title {
+    font-family: var(--smallcaps);
+    font-size: 1rem;
+    letter-spacing: 0.2em;
+    color: var(--ink);
+  }
+
+  .spotify-side-text {
+    font-style: italic;
+    color: var(--ink-soft);
+    font-size: 0.95rem;
+    line-height: 1.6;
+  }
+
+  .spotify-qr {
+    border: 1px solid var(--gold);
+    padding: 8px;
+    background: #fff;
+    display: block;
+  }
+
   .btn-spotify {
     display: inline-block;
-    padding: 0.85rem 2.25rem;
-    border: 1px solid var(--gold);
-    background: transparent;
-    color: var(--gold-deep);
+    padding: 0.85rem 1.75rem;
+    background: var(--ink);
+    color: var(--cream);
     font-family: var(--smallcaps);
-    font-size: 0.85rem;
+    font-size: 0.8rem;
     letter-spacing: 0.35em;
     text-transform: uppercase;
     text-decoration: none;
-    transition: background 0.3s, color 0.3s;
+    border: 1px solid var(--ink);
+    transition: background 0.3s;
   }
-  .btn-spotify:hover {
-    background: var(--gold);
-    color: var(--paper);
-  }
+  .btn-spotify:hover { background: var(--ink-soft); }
 
   /* FOOTER */
   footer {
@@ -736,25 +760,40 @@
   <div class="section-title reveal">
     <div class="ornament">· · ·</div>
     <h2>La playlist de la fiesta</h2>
+    <div class="sub">sumá tu canción</div>
   </div>
 
   <div class="spotify-card reveal">
-    <p class="spotify-intro">
-      Estas son las canciones que van a sonar en la pista. Seguí la playlist en Spotify para no perderte nada.
-    </p>
+    <div class="spotify-grid">
 
-    <iframe class="spotify-embed"
-      src="https://open.spotify.com/embed/playlist/6wOp0HIGzFTbAoHxEDWbPB?utm_source=generator&theme=0"
-      width="100%"
-      frameborder="0"
-      allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-      loading="lazy"
-    ></iframe>
+      <div>
+        <iframe class="spotify-embed"
+          src="https://open.spotify.com/embed/playlist/6wOp0HIGzFTbAoHxEDWbPB?utm_source=generator&theme=0"
+          width="100%"
+          frameborder="0"
+          allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+          loading="lazy"
+        ></iframe>
+      </div>
 
-    <div class="spotify-cta">
-      <a href="https://open.spotify.com/playlist/6wOp0HIGzFTbAoHxEDWbPB" target="_blank" rel="noopener noreferrer" class="btn-spotify">
-        Abrir en Spotify
-      </a>
+      <div class="spotify-side">
+        <p class="spotify-side-title">¿Querés agregar una canción?</p>
+        <p class="spotify-side-text">
+          Escaneá el QR con tu cámara, abrís la playlist directo en Spotify y agregás las que no pueden faltar.
+        </p>
+        <img
+          class="spotify-qr"
+          src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=https://open.spotify.com/playlist/6wOp0HIGzFTbAoHxEDWbPB"
+          alt="QR para abrir la playlist en Spotify"
+          width="180"
+          height="180"
+          loading="lazy"
+        />
+        <a href="https://open.spotify.com/playlist/6wOp0HIGzFTbAoHxEDWbPB" target="_blank" rel="noopener noreferrer" class="btn-spotify">
+          Abrir en Spotify →
+        </a>
+      </div>
+
     </div>
   </div>
 </section>
