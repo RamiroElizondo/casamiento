@@ -1028,16 +1028,17 @@
             <img class="track-cover" src="${escapeHtml(t.cover || '')}" alt="" />
             <div class="track-cover-overlay">${ICON_PLAY}</div>
            </div>`
-        : `<a href="${escapeHtml(spotifyUrl)}" target="_blank" rel="noopener" class="track-cover-wrap" aria-label="Ver en Spotify" title="Ver en Spotify">
-            <img class="track-cover" src="${escapeHtml(t.cover || '')}" alt="" />
-            <div class="track-cover-overlay">${ICON_SPOTIFY}</div>
-           </a>`;
+        : `<img class="track-cover" src="${escapeHtml(t.cover || '')}" alt="" />`;
+      const spotifyBtn = !t.preview
+        ? `<a class="btn-play btn-spotify-link" href="${escapeHtml(spotifyUrl)}" target="_blank" rel="noopener" aria-label="Ver en Spotify" title="Ver en Spotify">${ICON_SPOTIFY}</a>`
+        : '';
       li.innerHTML = `
         ${coverHtml}
         <div class="track-info">
           <div class="track-name">${escapeHtml(t.name)}</div>
           <div class="track-artist">${escapeHtml(t.artists)}</div>
         </div>
+        ${spotifyBtn}
         <button class="btn-add" data-uri="${escapeHtml(t.uri)}" data-name="${escapeHtml(t.name)}" data-artist="${escapeHtml(t.artists)}" aria-label="Sugerir">+</button>
       `;
       searchResults.appendChild(li);
