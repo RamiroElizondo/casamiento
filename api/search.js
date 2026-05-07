@@ -71,7 +71,8 @@ export default async function handler(req, res) {
       uri: t.uri,
       name: t.name,
       artists: t.artists.map(a => a.name).join(', '),
-      cover: t.album.images[2]?.url || t.album.images[1]?.url || t.album.images[0]?.url || ''
+      cover: t.album.images[2]?.url || t.album.images[1]?.url || t.album.images[0]?.url || '',
+      preview: t.preview_url || null
     }));
 
     // Cache de 30 segundos en el CDN para queries idénticas

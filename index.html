@@ -574,6 +574,24 @@
     text-overflow: ellipsis;
     white-space: nowrap;
   }
+  .btn-play {
+    flex-shrink: 0;
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    border: 1px solid var(--beige);
+    background: transparent;
+    color: var(--ink-soft);
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+  }
+  .btn-play:hover { background: rgba(217, 201, 168, 0.4); border-color: var(--gold); color: var(--gold-deep); }
+  .btn-play.playing { background: rgba(184, 146, 79, 0.15); border-color: var(--gold); color: var(--gold-deep); }
+  .btn-play svg { width: 13px; height: 13px; pointer-events: none; }
+
   .btn-add {
     flex-shrink: 0;
     width: 36px; height: 36px;
@@ -968,6 +986,9 @@
     }
   }
 
+  const ICON_PLAY = `<svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>`;
+  const ICON_PAUSE = `<svg viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>`;
+
   function renderTracks(tracks) {
     searchResults.innerHTML = '';
     if (!tracks.length) {
@@ -977,18 +998,59 @@
     tracks.forEach(t => {
       const li = document.createElement('li');
       li.className = 'track-item';
+      const playBtn = t.preview
+        ? `<button class="btn-play" data-preview="${escapeHtml(t.preview)}" aria-label="Escuchar preview">${ICON_PLAY}</button>`
+        : '';
       li.innerHTML = `
         <img class="track-cover" src="${escapeHtml(t.cover || '')}" alt="" />
         <div class="track-info">
           <div class="track-name">${escapeHtml(t.name)}</div>
           <div class="track-artist">${escapeHtml(t.artists)}</div>
         </div>
+        ${playBtn}
         <button class="btn-add" data-uri="${escapeHtml(t.uri)}" data-name="${escapeHtml(t.name)}" data-artist="${escapeHtml(t.artists)}" aria-label="Sugerir">+</button>
       `;
       searchResults.appendChild(li);
     });
   }
 
+  // Preview play/pause
+  let currentAudio = null;
+  let currentPlayBtn = null;
+
+  searchResults.addEventListener('click', (e) => {
+    const btn = e.target.closest('.btn-play');
+    if (!btn) return;
+
+    if (currentPlayBtn === btn) {
+      currentAudio.pause();
+      btn.innerHTML = ICON_PLAY;
+      btn.classList.remove('playing');
+      currentAudio = null;
+      currentPlayBtn = null;
+      return;
+    }
+
+    if (currentAudio) {
+      currentAudio.pause();
+      currentPlayBtn.innerHTML = ICON_PLAY;
+      currentPlayBtn.classList.remove('playing');
+    }
+
+    currentAudio = new Audio(btn.dataset.preview);
+    currentPlayBtn = btn;
+    btn.innerHTML = ICON_PAUSE;
+    btn.classList.add('playing');
+    currentAudio.play();
+    currentAudio.addEventListener('ended', () => {
+      btn.innerHTML = ICON_PLAY;
+      btn.classList.remove('playing');
+      currentAudio = null;
+      currentPlayBtn = null;
+    });
+  });
+
+  // Sugerir canción → Google Sheets
   searchResults.addEventListener('click', async (e) => {
     const btn = e.target.closest('.btn-add');
     if (!btn || btn.disabled) return;
@@ -1004,7 +1066,7 @@
       await fetch('https://script.google.com/macros/s/AKfycbwzjgCRFHVbPJFX6Y3u1cNl2n0jWdnT7rLuiZe5BnM_KMDvi2uupoSyYep6z2aggQV0/exec', {
         method: 'POST',
         mode: 'no-cors',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'text/plain' },
         body: JSON.stringify({ song: name, artist: artist })
       });
       btn.textContent = '✓';
