@@ -551,12 +551,33 @@
     transition: background 0.2s;
   }
   .track-item:hover { background: rgba(217, 201, 168, 0.2); }
+  .track-cover-wrap {
+    position: relative;
+    width: 48px; height: 48px;
+    flex-shrink: 0;
+    cursor: pointer;
+  }
   .track-cover {
     width: 48px; height: 48px;
     background: var(--beige-soft);
     flex-shrink: 0;
     object-fit: cover;
+    display: block;
   }
+  .track-cover-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(44, 36, 24, 0.52);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+  .track-cover-wrap:hover .track-cover-overlay,
+  .track-cover-wrap.playing .track-cover-overlay { opacity: 1; }
+  .track-cover-wrap.playing .track-cover-overlay { background: rgba(184, 146, 79, 0.6); }
+  .track-cover-overlay svg { width: 16px; height: 16px; color: #fff; filter: drop-shadow(0 1px 3px rgba(0,0,0,0.7)); pointer-events: none; }
   .track-info { flex: 1; min-width: 0; }
   .track-name {
     font-family: var(--serif);
@@ -1002,16 +1023,21 @@
       const li = document.createElement('li');
       li.className = 'track-item';
       const spotifyUrl = 'https://open.spotify.com/track/' + t.uri.replace('spotify:track:', '');
-      const previewBtn = t.preview
-        ? `<button class="btn-play" data-preview="${escapeHtml(t.preview)}" aria-label="Escuchar preview">${ICON_PLAY}</button>`
-        : `<a class="btn-play btn-spotify-link" href="${escapeHtml(spotifyUrl)}" target="_blank" rel="noopener" aria-label="Ver en Spotify" title="Ver en Spotify">${ICON_SPOTIFY}</a>`;
+      const coverHtml = t.preview
+        ? `<div class="track-cover-wrap" data-preview="${escapeHtml(t.preview)}" role="button" aria-label="Escuchar preview">
+            <img class="track-cover" src="${escapeHtml(t.cover || '')}" alt="" />
+            <div class="track-cover-overlay">${ICON_PLAY}</div>
+           </div>`
+        : `<a href="${escapeHtml(spotifyUrl)}" target="_blank" rel="noopener" class="track-cover-wrap" aria-label="Ver en Spotify" title="Ver en Spotify">
+            <img class="track-cover" src="${escapeHtml(t.cover || '')}" alt="" />
+            <div class="track-cover-overlay">${ICON_SPOTIFY}</div>
+           </a>`;
       li.innerHTML = `
-        <img class="track-cover" src="${escapeHtml(t.cover || '')}" alt="" />
+        ${coverHtml}
         <div class="track-info">
           <div class="track-name">${escapeHtml(t.name)}</div>
           <div class="track-artist">${escapeHtml(t.artists)}</div>
         </div>
-        ${previewBtn}
         <button class="btn-add" data-uri="${escapeHtml(t.uri)}" data-name="${escapeHtml(t.name)}" data-artist="${escapeHtml(t.artists)}" aria-label="Sugerir">+</button>
       `;
       searchResults.appendChild(li);
@@ -1023,13 +1049,15 @@
   let currentPlayBtn = null;
 
   searchResults.addEventListener('click', (e) => {
-    const btn = e.target.closest('.btn-play');
-    if (!btn) return;
+    const wrap = e.target.closest('.track-cover-wrap[data-preview]');
+    if (!wrap) return;
 
-    if (currentPlayBtn === btn) {
+    const overlay = wrap.querySelector('.track-cover-overlay');
+
+    if (currentPlayBtn === wrap) {
       currentAudio.pause();
-      btn.innerHTML = ICON_PLAY;
-      btn.classList.remove('playing');
+      overlay.innerHTML = ICON_PLAY;
+      wrap.classList.remove('playing');
       currentAudio = null;
       currentPlayBtn = null;
       return;
@@ -1037,18 +1065,18 @@
 
     if (currentAudio) {
       currentAudio.pause();
-      currentPlayBtn.innerHTML = ICON_PLAY;
+      currentPlayBtn.querySelector('.track-cover-overlay').innerHTML = ICON_PLAY;
       currentPlayBtn.classList.remove('playing');
     }
 
-    currentAudio = new Audio(btn.dataset.preview);
-    currentPlayBtn = btn;
-    btn.innerHTML = ICON_PAUSE;
-    btn.classList.add('playing');
+    currentAudio = new Audio(wrap.dataset.preview);
+    currentPlayBtn = wrap;
+    overlay.innerHTML = ICON_PAUSE;
+    wrap.classList.add('playing');
     currentAudio.play();
     currentAudio.addEventListener('ended', () => {
-      btn.innerHTML = ICON_PLAY;
-      btn.classList.remove('playing');
+      overlay.innerHTML = ICON_PLAY;
+      wrap.classList.remove('playing');
       currentAudio = null;
       currentPlayBtn = null;
     });
