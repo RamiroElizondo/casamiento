@@ -4,3 +4,8 @@ node_modules/
 .vercel
 .DS_Store
 *.log
+.next/
+
+# Frames PNG originales (pesados, fuente para scripts/optimize-frames.mjs).
+# Los frames optimizados que se sirven realmente viven en public/frames/.
+images/

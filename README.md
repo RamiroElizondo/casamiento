@@ -1,13 +1,34 @@
-# Casamiento Sofía & Mateo · Setup completo
+# Casamiento Yamila & Gonzalo · Setup completo
 
-Landing de casamiento con animación de sobre, countdown y los invitados pueden agregar canciones a tu playlist de Spotify sin necesidad de loguearse.
+Landing de casamiento hecha con **Next.js + Tailwind CSS**. Tiene un hero con efecto de video controlado por scroll (scroll-scrub, tipo Apple), countdown y los invitados pueden agregar canciones a tu playlist de Spotify sin necesidad de loguearse.
 
 ## Cómo funciona
 
-- Los invitados entran a la URL, abren el sobre, ven la cuenta regresiva y la galería
+- Los invitados entran a la URL, deslizan sobre el hero (el "video" se arma dibujando frames en un `<canvas>` según el scroll), ven la cuenta regresiva y la galería
 - En la sección de Spotify buscan canciones y las agregan
 - Las canciones se agregan a **tu** playlist usando un token tuyo guardado en el servidor
 - Los invitados no necesitan tener Spotify
+
+## Desarrollo local
+
+```bash
+npm install
+npm run dev
+```
+
+Abrí http://localhost:3000
+
+### Efecto de scroll-video del hero
+
+El hero (`components/HeroScrollVideo.jsx`) dibuja en un `<canvas>` los frames que están en `public/frames/frame-XXXX.webp`, eligiendo el frame según cuánto se scrolleó la sección.
+
+Esos frames livianos se generan a partir de los PNG originales (pesados, no se suben al repo) que viven en `images/`. Si necesitás regenerarlos:
+
+```bash
+npm run optimize-frames
+```
+
+Esto lee `images/ezgif-frame-*.png`, los redimensiona a 640px de ancho y los convierte a WebP calidad 72 en `public/frames/` (que sí se sube al repo, pesa unos 4-5MB en total).
 
 ---
 
@@ -92,31 +113,33 @@ Probá la URL final en tu celu. Buscá una canción, dale al `+` y debería apar
 
 ### Cambiar la fecha del casamiento
 
-En `index.html`, buscá:
+En `components/CountdownSection.jsx`, buscá:
 
 ```js
-const WEDDING_DATE = new Date('2026-03-15T18:30:00-03:00');
+const WEDDING_DATE = new Date('2026-10-24T18:30:00-03:00');
 ```
 
-El formato es `AAAA-MM-DDTHH:MM:SS-03:00` (Argentina). Cambialo por tu fecha real.
-
-También cambiá el texto debajo del countdown (`<div class="when">...`) y el lugar (`<div class="where">...`).
+El formato es `AAAA-MM-DDTHH:MM:SS-03:00` (Argentina). Cambialo por tu fecha real, y también el texto de `Sábado 24 de Octubre...` y el lugar (`Salon Tierras Negras...`) más abajo en el mismo archivo. La misma fecha/nombres aparecen también en `components/NamesSection.jsx` y en el `<title>` de `app/layout.js`.
 
 ### Cambiar los nombres
 
-Hacé buscar y reemplazar de "Sofía" y "Mateo" en `index.html`. Aparecen en el sobre, el título grande, el footer y el `<title>` de la pestaña.
+Buscá y reemplazá "Yamila" y "Gonzalo" en `components/NamesSection.jsx`, `components/SiteFooter.jsx` y `app/layout.js`.
 
 ### Reemplazar las fotos placeholder
 
-En la sección galería hay 6 `<div class="photo">` cada uno con un SVG. Reemplazá cada uno por:
+En `components/GallerySection.jsx` hay un array `PHOTOS` con 6 entradas, cada una con un SVG de relleno. Reemplazá el contenido de `<div className="photo reveal">` por una imagen real:
 
-```html
-<div class="photo reveal">
-  <img src="fotos/foto1.jpg" alt="" style="width:100%;height:100%;object-fit:cover;display:block" />
+```jsx
+<div className="photo reveal">
+  <img src="/fotos/foto1.jpg" alt="" className="h-full w-full object-cover" />
 </div>
 ```
 
-Subí las fotos a una carpeta `fotos/` en la raíz del proyecto.
+Subí las fotos a `public/fotos/`.
+
+### El efecto de scroll-video del hero
+
+Ver la sección "Efecto de scroll-video del hero" más arriba — el material sale de `images/` (frames PNG originales) y se procesa con `npm run optimize-frames` hacia `public/frames/`. Si querés cambiar qué tan "lento" se siente el scrub, ajustá `SCROLL_VH` en `components/HeroScrollVideo.jsx`.
 
 ---
 
@@ -130,11 +153,8 @@ Subí las fotos a una carpeta `fotos/` en la raíz del proyecto.
 **"Esa canción ya está en la playlist"**
 - El backend evita duplicados. Es esperado.
 
-**"Demasiadas canciones por hora, esperá un poco"**
-- Hay un límite de 30 canciones por hora por IP. Si querés cambiarlo, editá `RATE_LIMIT_MAX` en `api/add-track.js`.
-
-**El sobre no se abre en mobile**
-- Asegurate de tocarlo, no de hacer scroll. La animación es por click/tap.
+**El efecto de scroll-video no se ve / se ve en blanco**
+- Corré `npm run optimize-frames` para generar `public/frames/`. Sin esos archivos el hero queda con el canvas vacío.
 
 ---
 
@@ -142,14 +162,30 @@ Subí las fotos a una carpeta `fotos/` en la raíz del proyecto.
 
 ```
 casamiento/
-├── index.html              ← La landing
-├── api/
-│   ├── search.js           ← Busca canciones
-│   └── add-track.js        ← Agrega a la playlist
+├── app/
+│   ├── layout.js              ← <html>/<head>, fuentes, metadata
+│   ├── page.js                ← Ensambla todas las secciones
+│   ├── globals.css            ← Tailwind + estilos custom (noise, reveal, etc.)
+│   └── api/
+│       └── search/route.js    ← Busca canciones (Route Handler)
+├── components/
+│   ├── HeroScrollVideo.jsx     ← Hero con scroll-scrub sobre <canvas>
+│   ├── NamesSection.jsx
+│   ├── GallerySection.jsx
+│   ├── CountdownSection.jsx
+│   ├── SpotifySection.jsx     ← Buscador + sugerencia de canciones
+│   ├── SiteFooter.jsx
+│   └── ScrollReveal.jsx       ← Animaciones al scrollear (IntersectionObserver)
+├── public/
+│   └── frames/                ← Frames WebP optimizados (se suben al repo)
+├── images/                    ← Frames PNG originales (pesados, gitignored)
 ├── scripts/
-│   └── get-refresh-token.js ← Setup inicial (solo se corre una vez)
+│   ├── get-refresh-token.js   ← Setup inicial de Spotify (se corre una vez)
+│   └── optimize-frames.mjs    ← Genera public/frames/ a partir de images/
+├── next.config.mjs
+├── postcss.config.mjs
+├── jsconfig.json
 ├── package.json
-├── vercel.json
 ├── .env.example
 ├── .gitignore
 └── README.md

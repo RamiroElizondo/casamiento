@@ -1,12 +1,29 @@
 {
-  "name": "casamiento-sofia-mateo",
+  "name": "casamiento",
   "version": "1.0.0",
   "private": true,
   "type": "module",
   "scripts": {
-    "get-token": "node scripts/get-refresh-token.js"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "get-token": "node scripts/get-refresh-token.js",
+    "optimize-frames": "node scripts/optimize-frames.mjs"
   },
   "engines": {
     "node": ">=18"
+  },
+  "dependencies": {
+    "next": "^16.2.10",
+    "react": "^19.2.7",
+    "react-dom": "^19.2.7"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.3.2",
+    "autoprefixer": "^10.5.2",
+    "postcss": "^8.5.16",
+    "sharp": "^0.35.3",
+    "tailwindcss": "^4.3.2"
   }
 }
