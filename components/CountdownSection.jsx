@@ -2,10 +2,8 @@
 
 import { useEffect, useState } from 'react';
 
-const WEDDING_DATE = new Date('2026-10-24T18:30:00-03:00');
-
-function getTimeLeft() {
-  const diff = WEDDING_DATE - new Date();
+function getTimeLeft(target) {
+  const diff = target - new Date();
   if (diff <= 0) return { days: 0, hours: 0, mins: 0, secs: 0 };
   return {
     days: Math.floor(diff / (1000 * 60 * 60 * 24)),
@@ -15,14 +13,15 @@ function getTimeLeft() {
   };
 }
 
-export default function CountdownSection() {
+export default function CountdownSection({ targetIso, timeLabel }) {
   const [time, setTime] = useState(null);
 
   useEffect(() => {
-    setTime(getTimeLeft());
-    const id = setInterval(() => setTime(getTimeLeft()), 1000);
+    const target = new Date(targetIso);
+    setTime(getTimeLeft(target));
+    const id = setInterval(() => setTime(getTimeLeft(target)), 1000);
     return () => clearInterval(id);
-  }, []);
+  }, [targetIso]);
 
   const cells = [
     { label: 'Días', value: time?.days },
@@ -59,10 +58,10 @@ export default function CountdownSection() {
 
       <div className="reveal mt-12 text-center font-serif">
         <div className="text-[clamp(1.1rem,3vw,1.5rem)] italic text-ink">
-          Sábado 24 de Octubre de 2026 · 18:30 hs
+          Sábado 24 de Octubre de 2026 · {timeLabel}
         </div>
         <div className="mt-2 font-smallcaps text-[0.85rem] uppercase tracking-[0.3em] text-gold-deep">
-          Salon Tierras Negras · San Juan
+          San Juan · Argentina
         </div>
       </div>
     </section>

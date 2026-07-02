@@ -2,6 +2,8 @@ import './globals.css';
 
 export const metadata = {
   title: 'Yamila & Gonzalo · Nuestra Boda',
+  description: 'Te invitamos a celebrar con nosotros · 24 de Octubre de 2026',
+  robots: { index: false, follow: false }, // links personales: fuera de buscadores
 };
 
 export const viewport = {
