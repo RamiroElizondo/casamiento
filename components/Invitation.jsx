@@ -17,12 +17,12 @@ export default function Invitation({ type }) {
     <>
       <Hero />
       <NamesSection />
+      <GallerySection />
       <EventsSection type={type} />
       <CountdownSection
         targetIso={countdownEvent.dateTime}
         timeLabel={countdownEvent.time}
       />
-      <GallerySection />
       {cfg.spotify && <SpotifySection />}
       <RsvpSection type={type} />
       <SiteFooter />

@@ -27,6 +27,14 @@
 
 html {
   scroll-behavior: smooth;
+  /* Mobile-first: tipografía 20% más grande en pantallas chicas.
+     Todo el sitio usa rem, así que escala parejo. */
+  font-size: 120%;
+}
+@media (min-width: 1024px) {
+  html {
+    font-size: 100%;
+  }
 }
 
 body {
