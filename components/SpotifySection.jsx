@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
+import Ornament from '@/components/Ornament';
 
 const ADD_TRACK_URL =
   'https://script.google.com/macros/s/AKfycbwf3PwTOsKcHIMrolfU0kID85mS_R4hloHOsR71ikGGMLfQNqiBtpetHUTO_OhPhJIz/exec';
@@ -143,7 +144,7 @@ export default function SpotifySection() {
   return (
     <section className="relative z-10 mx-auto max-w-[720px] px-6 pb-32 pt-16">
       <div className="reveal mb-12 text-center">
-        <div className="mb-2 text-2xl tracking-[0.3em] text-gold">· · ·</div>
+        <Ornament className="mb-3 text-gold" />
         <h2 className="font-display text-[clamp(2rem,6vw,3.5rem)] font-normal text-ink">Sumá tu canción</h2>
         <div className="mt-2 font-smallcaps text-[0.85rem] uppercase tracking-[0.4em] text-gold-deep">
           la playlist de la fiesta

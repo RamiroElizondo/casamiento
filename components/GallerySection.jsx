@@ -90,11 +90,13 @@ const PHOTOS = [
   },
 ];
 
+import Ornament from '@/components/Ornament';
+
 export default function GallerySection() {
   return (
     <section className="relative z-10 px-6 pb-24 pt-16">
       <div className="reveal mb-12 text-center">
-        <div className="mb-2 text-2xl tracking-[0.3em] text-gold">· · ·</div>
+        <Ornament className="mb-3 text-gold" />
         <h2 className="font-display text-[clamp(2rem,6vw,3.5rem)] font-normal text-ink">Nuestra historia</h2>
         <div className="mt-2 font-smallcaps text-[0.85rem] uppercase tracking-[0.4em] text-gold-deep">
           en imágenes
@@ -110,7 +112,7 @@ export default function GallerySection() {
                 x="200"
                 y="380"
                 textAnchor="middle"
-                fontFamily="Italiana"
+                fontFamily="Playfair Display"
                 fontSize="14"
                 fill={photo.textFill}
                 opacity="0.7"

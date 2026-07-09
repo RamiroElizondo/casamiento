@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { WEDDING } from '@/lib/event';
+import Ornament from '@/components/Ornament';
 
 const FRAME_COUNT = 300;
 const SCROLL_VH = 350; // recorrido del scrub en mobile
@@ -169,7 +170,7 @@ function HeroMobileScrub() {
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/45 via-transparent to-black/55" />
         <div className="relative z-10 flex h-full w-full flex-col items-center justify-between px-6 py-10 text-center sm:py-14">
           <div className="hero-prelude">
-            <div className="ornament">· · ·</div>
+            <Ornament className="mb-3 text-gold-light" />
             <p>Tenemos algo que contarte</p>
           </div>
           <div className="hero-hint">↓ Deslizá para descubrirlo ↓</div>
@@ -188,8 +189,8 @@ function HeroDesktop() {
     <section className="relative flex min-h-screen items-center justify-center overflow-hidden px-12 py-16">
       <div className="grid w-full max-w-[1200px] grid-cols-[1.1fr_0.9fr] items-center gap-16">
         <div className="text-left">
-          <div className="hero-stagger text-2xl tracking-[0.5em] text-gold" style={{ '--d': '0.2s' }}>
-            · · ·
+          <div className="hero-stagger w-14" style={{ '--d': '0.2s' }}>
+            <Ornament className="text-gold" />
           </div>
           <div
             className="hero-stagger mt-6 font-smallcaps text-[0.9rem] uppercase tracking-[0.5em] text-gold-deep"

@@ -1,3 +1,5 @@
+import Ornament from '@/components/Ornament';
+
 export default function NamesSection() {
   return (
     <section className="reveal relative z-10 px-6 pb-12 pt-24 text-center">
@@ -9,7 +11,11 @@ export default function NamesSection() {
         <span className="my-[-0.1em] block text-[0.8em] font-normal not-italic italic text-gold">&amp;</span>
         Gonzalo
       </h1>
-      <div className="relative mx-auto my-8 h-px w-[60px] bg-gold before:absolute before:left-[-10px] before:top-1/2 before:h-[5px] before:w-[5px] before:-translate-y-1/2 before:rounded-full before:bg-gold before:content-[''] after:absolute after:right-[-10px] after:top-1/2 after:h-[5px] after:w-[5px] after:-translate-y-1/2 after:rounded-full after:bg-gold after:content-['']" />
+      <div className="mx-auto my-8 flex items-center justify-center gap-4">
+        <span className="h-px w-[50px] bg-gold" />
+        <Ornament className="text-gold" />
+        <span className="h-px w-[50px] bg-gold" />
+      </div>
       <p className="mx-auto max-w-[480px] text-[clamp(1rem,2.5vw,1.25rem)] italic text-ink-soft">
         Después de tantos atardeceres juntos, queremos compartir el más importante con vos.
       </p>

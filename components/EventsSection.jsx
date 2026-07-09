@@ -1,4 +1,5 @@
 import { EVENTS, INVITE_TYPES, mapsUrl } from '@/lib/event';
+import Ornament from '@/components/Ornament';
 
 function EventIcon({ kind }) {
   const common = {
@@ -44,7 +45,7 @@ export default function EventsSection({ type }) {
   return (
     <section className="relative z-10 px-6 py-16">
       <div className="reveal mb-12 text-center">
-        <div className="mb-2 text-2xl tracking-[0.3em] text-gold">· · ·</div>
+        <Ornament className="mb-3 text-gold" />
         <h2 className="font-display text-[clamp(2rem,6vw,3.5rem)] font-normal text-ink">
           {keys.length > 1 ? 'El gran día' : 'Te esperamos'}
         </h2>

@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import Ornament from '@/components/Ornament';
 
 function getTimeLeft(target) {
   const diff = target - new Date();
@@ -33,7 +34,7 @@ export default function CountdownSection({ targetIso, timeLabel }) {
   return (
     <section className="relative z-10 bg-gradient-to-b from-transparent via-beige/25 to-transparent px-6 py-24">
       <div className="reveal mb-12 text-center">
-        <div className="mb-2 text-2xl tracking-[0.3em] text-gold">· · ·</div>
+        <Ornament className="mb-3 text-gold" />
         <h2 className="font-display text-[clamp(2rem,6vw,3.5rem)] font-normal text-ink">Falta poco</h2>
         <div className="mt-2 font-smallcaps text-[0.85rem] uppercase tracking-[0.4em] text-gold-deep">
           cuenta regresiva

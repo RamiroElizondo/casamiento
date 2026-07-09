@@ -1,4 +1,6 @@
 import Hero from '@/components/Hero';
+import AmbientPetals from '@/components/AmbientPetals';
+import CoupleSection from '@/components/CoupleSection';
 import NamesSection from '@/components/NamesSection';
 import EventsSection from '@/components/EventsSection';
 import CountdownSection from '@/components/CountdownSection';
@@ -23,7 +25,9 @@ export default function Invitation({ type }) {
         targetIso={countdownEvent.dateTime}
         timeLabel={countdownEvent.time}
       />
+      <CoupleSection />
       {cfg.spotify && <SpotifySection />}
+      <AmbientPetals />
       <RsvpSection type={type} />
       <SiteFooter />
       <ScrollReveal />

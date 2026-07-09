@@ -1,4 +1,5 @@
 import { whatsappUrl } from '@/lib/event';
+import Ornament from '@/components/Ornament';
 
 function WhatsAppIcon() {
   return (
@@ -12,7 +13,7 @@ export default function RsvpSection({ type }) {
   return (
     <section className="relative z-10 bg-gradient-to-b from-transparent via-beige/25 to-transparent px-6 py-24 text-center">
       <div className="reveal">
-        <div className="mb-2 text-2xl tracking-[0.3em] text-gold">· · ·</div>
+        <Ornament className="mb-3 text-gold" />
         <h2 className="font-display text-[clamp(2rem,6vw,3.5rem)] font-normal text-ink">
           Confirmá tu asistencia
         </h2>
