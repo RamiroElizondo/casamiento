@@ -3,6 +3,7 @@ import AmbientPetals from '@/components/AmbientPetals';
 import CoupleSection from '@/components/CoupleSection';
 import NamesSection from '@/components/NamesSection';
 import EventsSection from '@/components/EventsSection';
+import DressCodeSection from '@/components/DressCodeSection';
 import CountdownSection from '@/components/CountdownSection';
 import GallerySection from '@/components/GallerySection';
 import SpotifySection from '@/components/SpotifySection';
@@ -21,6 +22,7 @@ export default function Invitation({ type }) {
       <NamesSection />
       <GallerySection />
       <EventsSection type={type} />
+      <DressCodeSection />
       <CountdownSection
         targetIso={countdownEvent.dateTime}
         timeLabel={countdownEvent.time}
