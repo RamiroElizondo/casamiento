@@ -22,13 +22,13 @@ Abrí http://localhost:3000
 
 El hero (`components/HeroScrollVideo.jsx`) dibuja en un `<canvas>` los frames que están en `public/frames/frame-XXXX.webp`, eligiendo el frame según cuánto se scrolleó la sección.
 
-Esos frames livianos se generan a partir de los PNG originales (pesados, no se suben al repo) que viven en `images/`. Si necesitás regenerarlos:
+Esos frames livianos se generan a partir de los PNG originales (pesados, no se suben al repo) que viven en `images/scroll/`. Si necesitás regenerarlos:
 
 ```bash
 npm run optimize-frames
 ```
 
-Esto lee `images/ezgif-frame-*.png`, los redimensiona a 640px de ancho y los convierte a WebP calidad 72 en `public/frames/` (que sí se sube al repo, pesa unos 4-5MB en total).
+Esto lee `images/scroll/ezgif-frame-*.png`, los redimensiona a 640px de ancho y los convierte a WebP calidad 72 en `public/frames/` (que sí se sube al repo, pesa unos 4-5MB en total).
 
 ---
 
@@ -139,7 +139,7 @@ Subí las fotos a `public/fotos/`.
 
 ### El efecto de scroll-video del hero
 
-Ver la sección "Efecto de scroll-video del hero" más arriba — el material sale de `images/` (frames PNG originales) y se procesa con `npm run optimize-frames` hacia `public/frames/`. Si querés cambiar qué tan "lento" se siente el scrub, ajustá `SCROLL_VH` en `components/HeroScrollVideo.jsx`.
+Ver la sección "Efecto de scroll-video del hero" más arriba — el material sale de `images/scroll/` (frames PNG originales) y se procesa con `npm run optimize-frames` hacia `public/frames/`. Si querés cambiar qué tan "lento" se siente el scrub, ajustá `SCROLL_VH` en `components/HeroScrollVideo.jsx`.
 
 ---
 
@@ -178,10 +178,11 @@ casamiento/
 │   └── ScrollReveal.jsx       ← Animaciones al scrollear (IntersectionObserver)
 ├── public/
 │   └── frames/                ← Frames WebP optimizados (se suben al repo)
-├── images/                    ← Frames PNG originales (pesados, gitignored)
+├── images/
+│   └── scroll/                ← Frames PNG originales (pesados, gitignored)
 ├── scripts/
 │   ├── get-refresh-token.js   ← Setup inicial de Spotify (se corre una vez)
-│   └── optimize-frames.mjs    ← Genera public/frames/ a partir de images/
+│   └── optimize-frames.mjs    ← Genera public/frames/ a partir de images/scroll/
 ├── next.config.mjs
 ├── postcss.config.mjs
 ├── jsconfig.json

@@ -1,5 +1,5 @@
 // scripts/optimize-frames.mjs
-// Convierte los frames PNG de images/ (fuente pesada, no se sube a git) a WebP
+// Convierte los frames PNG de images/scroll/ (fuente pesada, no se sube a git) a WebP
 // livianos en public/frames/, listos para el efecto scroll-scrub del hero.
 // Uso: npm run optimize-frames
 
@@ -7,7 +7,7 @@ import sharp from 'sharp';
 import { readdir, mkdir } from 'node:fs/promises';
 import path from 'node:path';
 
-const SRC_DIR = path.resolve('images');
+const SRC_DIR = path.resolve('images/scroll');
 const OUT_DIR = path.resolve('public/frames');
 const TARGET_WIDTH = 640;
 const QUALITY = 72;
