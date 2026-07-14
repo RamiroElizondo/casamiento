@@ -3,11 +3,10 @@
 import { useEffect, useRef, useState } from 'react';
 import Ornament from '@/components/Ornament';
 
-// FOTOS: reemplazá estos dos archivos por las mitades reales de la foto
-// (novia con brazo extendido a la izquierda, novio a la derecha).
-// Mantené proporción vertical (3:4 aprox). Mismo nombre de archivo y listo.
-const PHOTO_LEFT = '/couple/novia.webp';
-const PHOTO_RIGHT = '/couple/novio.webp';
+// FOTOS: mitades reales de la foto (novio a la izquierda, novia a la derecha).
+// Proporción 3:5, cortadas en la misma línea para que coincidan al unirse.
+const PHOTO_LEFT = '/couple/novio.webp';
+const PHOTO_RIGHT = '/couple/novia.webp';
 
 /* ----------------------- cañón de anillos ----------------------- */
 
@@ -160,7 +159,7 @@ export default function CoupleSection() {
   }
 
   return (
-    <section className="relative z-10 overflow-hidden px-6 py-24">
+    <section className="relative z-10 overflow-hidden px-6 py-15">
       <div className="reveal mb-12 text-center">
         <Ornament className="mb-3 text-gold" />
         <h2 className="font-display text-[clamp(2rem,6vw,3.5rem)] font-normal text-ink">
@@ -173,7 +172,7 @@ export default function CoupleSection() {
 
       <div ref={stageRef} className="reveal relative mx-auto max-w-[820px]">
         <div className="flex items-stretch justify-center">
-          {/* Mitad novia */}
+          {/* Mitad novio */}
           <div
             className="couple-half min-w-0 flex-1 transition-all duration-700 ease-in-out"
             style={joined ? { transform: 'translateX(38px)' } : undefined}
@@ -185,13 +184,13 @@ export default function CoupleSection() {
             >
               <img
                 src={PHOTO_LEFT}
-                alt="Yamila"
+                alt="Gonzalo"
                 loading="lazy"
-                className="aspect-[3/4] w-full object-cover object-right"
+                className="aspect-[3/5] w-full object-cover object-right"
               />
             </div>
             <div className="mt-4 text-center font-display text-[1.4rem] italic text-ink">
-              Yamila
+              Gonzalo
             </div>
           </div>
 
@@ -209,7 +208,7 @@ export default function CoupleSection() {
             </button>
           </div>
 
-          {/* Mitad novio */}
+          {/* Mitad novia */}
           <div
             className="couple-half min-w-0 flex-1 transition-all duration-700 ease-in-out"
             style={joined ? { transform: 'translateX(-38px)' } : undefined}
@@ -221,13 +220,13 @@ export default function CoupleSection() {
             >
               <img
                 src={PHOTO_RIGHT}
-                alt="Gonzalo"
+                alt="Yamila"
                 loading="lazy"
-                className="aspect-[3/4] w-full object-cover object-left"
+                className="aspect-[3/5] w-full object-cover object-left"
               />
             </div>
             <div className="mt-4 text-center font-display text-[1.4rem] italic text-ink">
-              Gonzalo
+              Yamila
             </div>
           </div>
         </div>
@@ -237,6 +236,16 @@ export default function CoupleSection() {
           ref={canvasRef}
           className="pointer-events-none absolute -inset-6 z-30 h-[calc(100%+48px)] w-[calc(100%+48px)]"
         />
+      </div>
+
+      {/* Cita */}
+      <div className="reveal mx-auto mt-12 max-w-[640px] text-center">
+        <p className="font-display text-[clamp(1.05rem,2.6vw,1.35rem)] italic leading-relaxed text-ink">
+          «Llamados por Jesús a amarnos como Él nos amó, unimos nuestras vidas
+          para ser luz en el camino, testigos de fidelidad y constructores de
+          un mundo mejor, caminando juntos bajo la bendición de Dios»
+        </p>
+        <Ornament className="mt-5 text-gold" />
       </div>
     </section>
   );

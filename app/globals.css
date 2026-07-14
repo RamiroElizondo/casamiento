@@ -184,6 +184,83 @@ body::before {
 .track-cover-wrap.playing .track-cover-overlay { opacity: 1; }
 .track-cover-wrap.playing .track-cover-overlay { background: rgba(184, 146, 79, 0.6); }
 
+/* BOTÓN RSVP: pulso de resplandor + brillo que lo recorre */
+.rsvp-btn {
+  position: relative;
+  overflow: hidden;
+  animation: rsvpPulse 3s ease-in-out infinite;
+}
+.rsvp-btn::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -80%;
+  width: 45%;
+  height: 100%;
+  background: linear-gradient(
+    105deg,
+    transparent,
+    rgba(255, 252, 244, 0.5),
+    transparent
+  );
+  transform: skewX(-20deg);
+  animation: rsvpShine 4.2s ease-in-out infinite;
+}
+@keyframes rsvpPulse {
+  0%,
+  100% {
+    box-shadow:
+      0 6px 22px rgba(184, 146, 79, 0.35),
+      0 0 0 0 rgba(184, 146, 79, 0.4);
+  }
+  50% {
+    box-shadow:
+      0 8px 26px rgba(184, 146, 79, 0.45),
+      0 0 0 12px rgba(184, 146, 79, 0);
+  }
+}
+@keyframes rsvpShine {
+  0%,
+  55% {
+    left: -80%;
+  }
+  100% {
+    left: 130%;
+  }
+}
+
+/* Check de "copiado" en sugerencia de regalo */
+.copied-pop {
+  animation: copiedPop 0.35s cubic-bezier(0.2, 1.4, 0.4, 1);
+}
+@keyframes copiedPop {
+  0% {
+    transform: scale(0.3);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rsvp-btn,
+  .rsvp-btn::after,
+  .copied-pop {
+    animation: none;
+  }
+}
+
+/* CARRUSEL PREBODA: ocultar barra de scroll */
+.scrollbar-none {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+
 /* TOAST */
 .toast {
   transform: translateX(-50%) translateY(100px);

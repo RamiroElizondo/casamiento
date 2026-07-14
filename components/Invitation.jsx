@@ -5,8 +5,11 @@ import NamesSection from '@/components/NamesSection';
 import EventsSection from '@/components/EventsSection';
 import DressCodeSection from '@/components/DressCodeSection';
 import CountdownSection from '@/components/CountdownSection';
+import MomentsSection from '@/components/MomentsSection';
 import GallerySection from '@/components/GallerySection';
 import SpotifySection from '@/components/SpotifySection';
+import PrebodaCarousel from '@/components/PrebodaCarousel';
+import GiftSection from '@/components/GiftSection';
 import RsvpSection from '@/components/RsvpSection';
 import SiteFooter from '@/components/SiteFooter';
 import ScrollReveal from '@/components/ScrollReveal';
@@ -22,13 +25,16 @@ export default function Invitation({ type }) {
       <NamesSection />
       <GallerySection />
       <EventsSection type={type} />
-      <DressCodeSection />
+      <MomentsSection />
       <CountdownSection
         targetIso={countdownEvent.dateTime}
         timeLabel={countdownEvent.time}
       />
       <CoupleSection />
       {cfg.spotify && <SpotifySection />}
+      <PrebodaCarousel />
+      <DressCodeSection />
+      <GiftSection />
       <AmbientPetals />
       <RsvpSection type={type} />
       <SiteFooter />
