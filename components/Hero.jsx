@@ -210,8 +210,7 @@ function HeroDesktop() {
             className="hero-stagger mt-8 max-w-[440px] text-[1.35rem] italic leading-relaxed text-ink-soft"
             style={{ '--d': '1s' }}
           >
-            Tenemos algo que contarte: después de tantos atardeceres juntos,
-            queremos compartir el más importante con vos.
+            Despues de tantos momentos compartidos, risas, aprendizajes y amor, hemos decidido unir nuestras vidas para siempre. Nos encntaria que nos acompañes a celebrar este dia tan importante para nosotros.
           </p>
           <div
             className="hero-stagger mt-12 font-smallcaps text-[0.8rem] uppercase tracking-[0.4em] text-gold-deep"
