@@ -47,11 +47,8 @@ export default function PrebodaCarousel() {
     <section className="relative z-10 overflow-hidden py-16">
       <div className="reveal mb-10 px-6 text-center">
         <Ornament className="mb-3 text-gold" />
-        <h2 className="font-display text-[clamp(2rem,6vw,3.5rem)] font-normal text-ink">
-          La preboda
-        </h2>
         <div className="mt-2 font-smallcaps text-[0.85rem] uppercase tracking-[0.4em] text-gold-deep">
-          nuestros momentos
+          Nos preparamos juntos para el gran día
         </div>
       </div>
 
