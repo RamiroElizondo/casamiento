@@ -25,12 +25,12 @@ export default function RsvpSection({ type }) {
         Tu presencia es nuestro mejor regalo. Confirmanos por WhatsApp así te
         guardamos un lugar.
       </p>
-      <div className="reveal mt-10">
+      <div className="reveal mt-10 flex justify-center px-2">
         <a
           href={whatsappUrl(type)}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-3 bg-gold px-10 py-4 font-smallcaps text-[0.85rem] uppercase tracking-[0.3em] text-paper shadow-soft transition-all duration-300 hover:bg-gold-deep hover:shadow-deep"
+          className="rsvp-btn inline-flex w-full max-w-[340px] items-center justify-center gap-3 rounded-full bg-gradient-to-r from-gold to-gold-deep px-10 py-[1.1rem] font-smallcaps text-[0.9rem] uppercase tracking-[0.3em] text-paper transition-transform duration-200 active:scale-[0.96] sm:w-auto"
         >
           <WhatsAppIcon />
           Confirmar

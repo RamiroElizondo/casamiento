@@ -96,16 +96,18 @@ export default function EventsSection({ type }) {
               <div className={`mt-1 text-ink-soft ${compact ? 'text-[0.85rem]' : 'text-[0.95rem]'}`}>
                 {ev.address}
               </div>
-              <a
-                href={mapsUrl(key)}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={`mt-6 inline-block whitespace-nowrap border border-gold font-smallcaps uppercase text-gold-deep transition-colors duration-300 hover:bg-gold hover:text-paper ${
-                  compact ? 'px-4 py-2 text-[0.68rem] tracking-[0.2em]' : 'px-6 py-2 text-[0.75rem] tracking-[0.3em]'
-                }`}
-              >
-                Cómo llegar
-              </a>
+              {key !== 'civil' && (
+                <a
+                  href={mapsUrl(key)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`mt-6 inline-block whitespace-nowrap border border-gold font-smallcaps uppercase text-gold-deep transition-colors duration-300 hover:bg-gold hover:text-paper ${
+                    compact ? 'px-4 py-2 text-[0.68rem] tracking-[0.2em]' : 'px-6 py-2 text-[0.75rem] tracking-[0.3em]'
+                  }`}
+                >
+                  Cómo llegar
+                </a>
+              )}
             </div>
           );
         })}

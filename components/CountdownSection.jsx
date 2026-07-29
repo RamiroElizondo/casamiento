@@ -35,9 +35,9 @@ export default function CountdownSection({ targetIso, timeLabel }) {
     <section className="relative z-10 bg-gradient-to-b from-transparent via-beige/25 to-transparent px-6 py-24">
       <div className="reveal mb-12 text-center">
         <Ornament className="mb-3 text-gold" />
-        <h2 className="font-display text-[clamp(2rem,6vw,3.5rem)] font-normal text-ink">Falta poco</h2>
+        <h2 className="font-display text-[clamp(2rem,6vw,3.5rem)] font-normal text-ink">COMENZÓ LA CUENTA REGRESIVA</h2>
         <div className="mt-2 font-smallcaps text-[0.85rem] uppercase tracking-[0.4em] text-gold-deep">
-          cuenta regresiva
+          para nuestra boda
         </div>
       </div>
 

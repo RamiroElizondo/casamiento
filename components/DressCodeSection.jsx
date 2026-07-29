@@ -56,7 +56,7 @@ export default function DressCodeSection() {
       <p className="reveal mx-auto max-w-[560px] text-center italic leading-relaxed text-ink-soft">
         Con mucho cariño les recordamos que el blanco y las tonalidades claras
         son un honor reservado para la novia. Cada detalle de esta celebración
-        fue pensado con mucho cariño para crear una noche especial. Nos hará
+        fue pensado con mucha dedicación para crear una noche especial. Nos hará
         muy felices que formen parte de esta experiencia acompañándonos con el
         estilo de vestimenta indicado en la invitación.
       </p>

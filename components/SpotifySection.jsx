@@ -32,7 +32,7 @@ function SpotifyIcon() {
 export default function SpotifySection() {
   const [query, setQuery] = useState('');
   const [tracks, setTracks] = useState([]);
-  const [status, setStatus] = useState('Buscá una canción para sugerirla');
+  const [status, setStatus] = useState('');
   const [playingUri, setPlayingUri] = useState(null);
   const [addedUris, setAddedUris] = useState(() => new Set());
   const [pendingUris, setPendingUris] = useState(() => new Set());
@@ -177,9 +177,9 @@ export default function SpotifySection() {
         </div>
 
         <ul className="search-results mb-2 max-h-[440px] list-none overflow-y-auto">
-          {tracks.length === 0 && (
+          {tracks.length === 0 && query.trim() && (
             <li className="px-4 py-8 text-center italic text-ink-soft/70">
-              {query.trim() ? 'Sin resultados' : 'Empezá a escribir para buscar canciones'}
+              Sin resultados
             </li>
           )}
           {tracks.map((t) => {

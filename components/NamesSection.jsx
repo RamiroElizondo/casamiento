@@ -2,7 +2,8 @@ import Ornament from '@/components/Ornament';
 
 export default function NamesSection() {
   return (
-    <section className="reveal relative z-10 px-6 pb-12 pt-24 text-center">
+    // En desktop (lg+) el hero ya muestra este mismo contenido; solo va en mobile.
+    <section className="reveal relative z-10 px-6 pb-12 pt-24 text-center lg:hidden">
       <div className="mb-6 font-smallcaps text-[0.85rem] uppercase tracking-[0.5em] text-gold-deep">
         24 · Octubre · 2026
       </div>
@@ -17,7 +18,7 @@ export default function NamesSection() {
         <span className="h-px w-[50px] bg-gold" />
       </div>
       <p className="mx-auto max-w-[480px] text-[clamp(1rem,2.5vw,1.25rem)] italic text-ink-soft">
-        Después de tantos atardeceres juntos, queremos compartir el más importante con vos.
+        Despues de tantos momentos compartidos, risas, aprendizajes y amor, hemos decidido unir nuestras vidas para siempre. Nos encntaria que nos acompañes a celebrar este dia tan importante para nosotros.
       </p>
     </section>
   );
