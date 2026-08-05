@@ -1,4 +1,4 @@
-import { whatsappUrl } from '@/lib/event';
+import { whatsappUrl, whatsappDeclineUrl } from '@/lib/event';
 import Ornament from '@/components/Ornament';
 
 function WhatsAppIcon() {
@@ -25,7 +25,7 @@ export default function RsvpSection({ type }) {
         Tu presencia es nuestro mejor regalo. Confirmanos por WhatsApp así te
         guardamos un lugar.
       </p>
-      <div className="reveal mt-10 flex justify-center px-2">
+      <div className="reveal mt-10 flex flex-col items-center gap-4 px-2">
         <a
           href={whatsappUrl(type)}
           target="_blank"
@@ -34,6 +34,14 @@ export default function RsvpSection({ type }) {
         >
           <WhatsAppIcon />
           Confirmar
+        </a>
+        <a
+          href={whatsappDeclineUrl(type)}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex w-full max-w-[340px] items-center justify-center gap-3 rounded-full border border-gold px-10 py-[1.1rem] font-smallcaps text-[0.9rem] uppercase tracking-[0.3em] text-gold-deep transition-transform duration-200 active:scale-[0.96] sm:w-auto"
+        >
+          Indicar que no voy
         </a>
       </div>
     </section>

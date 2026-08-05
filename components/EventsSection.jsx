@@ -62,6 +62,12 @@ export default function EventsSection({ type }) {
       <div className={wrapClass}>
         {keys.map((key) => {
           const ev = EVENTS[key];
+          // La dirección y el botón "Cómo llegar" solo se muestran en la
+          // tarjeta de Recepción (para no repetir la misma dirección en
+          // cena/fiesta, que comparten lugar). Si la invitación tiene una
+          // sola tarjeta (ej. solo fiesta, para invitados de después de
+          // cena), sí se muestra para que sepan a dónde ir.
+          const showLocation = key === 'recepcion' || keys.length === 1;
           return (
             <div
               key={key}
@@ -93,10 +99,12 @@ export default function EventsSection({ type }) {
               <div className={`mt-4 italic text-ink ${compact ? 'text-[1.1rem]' : 'text-[1.25rem]'}`}>
                 {ev.place}
               </div>
-              <div className={`mt-1 text-ink-soft ${compact ? 'text-[0.85rem]' : 'text-[0.95rem]'}`}>
-                {ev.address}
-              </div>
-              {key !== 'civil' && (
+              {showLocation && ev.address && (
+                <div className={`mt-1 text-ink-soft ${compact ? 'text-[0.85rem]' : 'text-[0.95rem]'}`}>
+                  {ev.address}
+                </div>
+              )}
+              {showLocation && key !== 'civil' && (
                 <a
                   href={mapsUrl(key)}
                   target="_blank"

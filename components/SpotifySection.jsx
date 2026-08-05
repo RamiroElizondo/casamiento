@@ -172,7 +172,7 @@ export default function SpotifySection() {
             value={query}
             onChange={handleInputChange}
             placeholder="Buscá una canción o artista..."
-            className="flex-1 border border-beige bg-cream px-4 py-[0.85rem] pl-10 font-serif text-base text-ink outline-none transition-colors focus:border-gold placeholder:italic placeholder:text-ink-soft/50"
+            className="min-w-0 flex-1 border border-beige bg-cream px-4 py-[0.85rem] pl-10 font-serif text-base text-ink outline-none transition-colors focus:border-gold placeholder:italic placeholder:text-ink-soft/50"
           />
         </div>
 

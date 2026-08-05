@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
 import Ornament from '@/components/Ornament';
 
 // FOTOS: mitades reales de la foto (novio a la izquierda, novia a la derecha).
@@ -144,9 +145,11 @@ export default function CoupleSection() {
   const spriteRef = useRef(null);
   const stopRef = useRef(null);
   const [joined, setJoined] = useState(false);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     spriteRef.current = makeRingSprite();
+    setMounted(true);
     return () => stopRef.current?.();
   }, []);
 
@@ -230,13 +233,22 @@ export default function CoupleSection() {
             </div>
           </div>
         </div>
-
-        {/* Capa del estallido de anillos */}
-        <canvas
-          ref={canvasRef}
-          className="pointer-events-none absolute -inset-6 z-30 h-[calc(100%+48px)] w-[calc(100%+48px)]"
-        />
       </div>
+
+      {/* Capa del estallido de anillos: se renderiza en un portal fijo a la
+          ventana para que los anillos salgan de las esquinas de la pantalla
+          y no de las esquinas del componente, sea cual sea el tamaño de
+          pantalla. Un ancestro con la clase "reveal" aplica un transform
+          CSS que, de estar el canvas dentro del árbol normal, crearía un
+          nuevo contenedor de posicionamiento para "fixed" y rompería esto. */}
+      {mounted &&
+        createPortal(
+          <canvas
+            ref={canvasRef}
+            className="pointer-events-none fixed inset-0 z-[999] h-screen w-screen"
+          />,
+          document.body
+        )}
 
       {/* Cita */}
       <div className="reveal mx-auto mt-12 max-w-[640px] text-center">

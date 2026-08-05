@@ -18,7 +18,7 @@ export default function NamesSection() {
         <span className="h-px w-[50px] bg-gold" />
       </div>
       <p className="mx-auto max-w-[480px] text-[clamp(1rem,2.5vw,1.25rem)] italic text-ink-soft">
-        Despues de tantos momentos compartidos, risas, aprendizajes y amor, hemos decidido unir nuestras vidas para siempre. Nos encntaria que nos acompañes a celebrar este dia tan importante para nosotros.
+        Despues de tantos momentos compartidos, risas, aprendizajes y amor, hemos decidido unir nuestras vidas para siempre. Nos encantaría que nos acompañes a celebrar este dia tan importante para nosotros.
       </p>
     </section>
   );
