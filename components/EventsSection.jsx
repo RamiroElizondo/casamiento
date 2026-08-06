@@ -44,7 +44,7 @@ export default function EventsSection({ type }) {
   const compact = keys.length >= 4;
 
   const wrapClass = compact
-    ? 'mx-auto grid max-w-[1200px] grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-6 lg:grid-cols-4'
+    ? 'mx-auto flex max-w-[1400px] flex-wrap items-stretch justify-center gap-5 sm:gap-6 lg:flex-nowrap'
     : 'mx-auto flex max-w-[880px] flex-col gap-6 md:flex-row md:justify-center';
 
   return (
@@ -77,7 +77,9 @@ export default function EventsSection({ type }) {
             <div
               key={key}
               className={`event-card reveal relative border border-gold bg-paper text-center ${
-                compact ? 'px-5 py-8' : 'flex-1 px-8 py-10'
+                compact
+                  ? 'flex w-full flex-col items-center justify-center px-5 py-8 sm:w-[calc(50%-0.75rem)] lg:w-auto lg:min-w-0 lg:flex-1 lg:basis-0'
+                  : 'flex-1 px-8 py-10'
               }`}
             >
               <div
