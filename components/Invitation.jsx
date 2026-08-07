@@ -33,10 +33,10 @@ export default function Invitation({ type }) {
       <CoupleSection />
       {cfg.spotify && <SpotifySection />}
       <PrebodaCarousel />
-      <DressCodeSection />
-      <GiftSection />
+      {type !== 'misa' && <DressCodeSection />}
+      {type !== 'misa' && <GiftSection />}
       <AmbientPetals />
-      <RsvpSection type={type} />
+      {type !== 'misa' && <RsvpSection type={type} />}
       <SiteFooter />
       <ScrollReveal />
     </>
