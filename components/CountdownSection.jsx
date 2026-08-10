@@ -45,12 +45,12 @@ export default function CountdownSection({ targetIso, timeLabel }) {
         {cells.map((cell) => (
           <div
             key={cell.label}
-            className="countdown-cell border border-gold bg-paper px-2 py-5 text-center"
+            className="countdown-cell border border-gold bg-paper px-1 py-5 text-center sm:px-2"
           >
             <div className="font-display text-[clamp(2rem,8vw,4rem)] leading-none tabular-nums text-ink">
               {cell.value ?? '--'}
             </div>
-            <div className="mt-2 font-smallcaps text-[0.7rem] uppercase tracking-[0.3em] text-gold-deep">
+            <div className="mt-2 font-smallcaps text-[0.58rem] uppercase tracking-[0.12em] text-gold-deep sm:text-[0.7rem] sm:tracking-[0.3em]">
               {cell.label}
             </div>
           </div>
