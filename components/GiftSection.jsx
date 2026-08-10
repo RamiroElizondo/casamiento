@@ -67,10 +67,10 @@ function CopyRow({ label, value }) {
         type="button"
         onClick={copy}
         aria-label={copied ? 'Copiado' : `Copiar ${label}`}
-        className="group flex max-w-full items-center gap-2 text-ink transition-colors hover:text-gold-deep active:scale-[0.98]"
+        className="group flex w-full max-w-full flex-nowrap items-center justify-center gap-2 text-ink transition-colors hover:text-gold-deep active:scale-[0.98] sm:w-auto sm:justify-start"
       >
-        <span className="break-all text-[0.95rem] tracking-wide">{value}</span>
-        <span className="relative flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-gold/50 bg-paper text-gold-deep transition-all duration-300 group-hover:border-gold group-active:scale-90">
+        <span className="break-all text-[0.72rem] tracking-normal sm:text-[0.95rem] sm:tracking-wide">{value}</span>
+        <span className="relative flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-gold/50 bg-paper text-gold-deep transition-all duration-300 group-hover:border-gold group-active:scale-90 sm:h-8 sm:w-8">
           {copied ? (
             <CheckIcon className="copied-pop h-4 w-4" />
           ) : (
