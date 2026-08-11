@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import Ornament from '@/components/Ornament';
 
 // Carrusel de fotos de la preboda. Altura fija: cada foto conserva su
@@ -36,11 +36,40 @@ function Chevron({ flip }) {
 
 export default function PrebodaCarousel() {
   const trackRef = useRef(null);
+  const drag = useRef({ down: false, startX: 0, scrollLeft: 0 });
+  const [isDragging, setIsDragging] = useState(false);
 
   function scrollBy(dir) {
     const el = trackRef.current;
     if (!el) return;
     el.scrollBy({ left: dir * el.clientWidth * 0.8, behavior: 'smooth' });
+  }
+
+  // Arrastre con mouse en desktop: el track sigue siendo un scroll-snap
+  // nativo (mobile/touch intactos), esto solo suma el drag con el mouse.
+  function handleMouseDown(e) {
+    const el = trackRef.current;
+    if (!el) return;
+    drag.current.down = true;
+    drag.current.startX = e.pageX - el.offsetLeft;
+    drag.current.scrollLeft = el.scrollLeft;
+    setIsDragging(true);
+  }
+
+  function handleMouseMove(e) {
+    if (!drag.current.down) return;
+    const el = trackRef.current;
+    if (!el) return;
+    e.preventDefault();
+    const x = e.pageX - el.offsetLeft;
+    const walk = x - drag.current.startX;
+    el.scrollLeft = drag.current.scrollLeft - walk;
+  }
+
+  function stopDrag() {
+    if (!drag.current.down) return;
+    drag.current.down = false;
+    setIsDragging(false);
   }
 
   return (
@@ -55,7 +84,13 @@ export default function PrebodaCarousel() {
       <div className="reveal relative">
         <div
           ref={trackRef}
-          className="scrollbar-none flex snap-x snap-mandatory gap-4 overflow-x-auto px-6 md:gap-5"
+          onMouseDown={handleMouseDown}
+          onMouseMove={handleMouseMove}
+          onMouseUp={stopDrag}
+          onMouseLeave={stopDrag}
+          className={`scrollbar-none flex gap-4 overflow-x-auto px-6 md:gap-5 md:cursor-grab ${
+            isDragging ? 'snap-none md:cursor-grabbing' : 'snap-x snap-mandatory'
+          }`}
         >
           {PHOTOS.map((src, i) => (
             <div
@@ -66,7 +101,8 @@ export default function PrebodaCarousel() {
                 src={src}
                 alt={`Preboda de Gonzalo y Yamila, foto ${i + 1}`}
                 loading="lazy"
-                className="h-[340px] w-auto max-w-none md:h-[440px]"
+                draggable={false}
+                className="h-[340px] w-auto max-w-none select-none md:h-[440px]"
               />
             </div>
           ))}

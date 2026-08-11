@@ -1,8 +1,10 @@
 import Hero from '@/components/Hero';
+import HeroSimple from '@/components/HeroSimple';
 import AmbientPetals from '@/components/AmbientPetals';
 import CoupleSection from '@/components/CoupleSection';
 import NamesSection from '@/components/NamesSection';
 import EventsSection from '@/components/EventsSection';
+import PaymentSection from '@/components/PaymentSection';
 import DressCodeSection from '@/components/DressCodeSection';
 import CountdownSection from '@/components/CountdownSection';
 import MomentsSection from '@/components/MomentsSection';
@@ -21,10 +23,11 @@ export default function Invitation({ type }) {
 
   return (
     <>
-      <Hero />
-      <NamesSection />
+      {type === 'misa' ? <HeroSimple /> : <Hero />}
+      {type !== 'misa' && <NamesSection />}
       <GallerySection />
       <EventsSection type={type} />
+      {cfg.payment && <PaymentSection amount={cfg.payment} />}
       <MomentsSection />
       <CountdownSection
         targetIso={countdownEvent.dateTime}

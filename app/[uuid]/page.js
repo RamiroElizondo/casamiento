@@ -2,7 +2,7 @@ import { notFound } from 'next/navigation';
 import { INVITES } from '@/lib/event';
 import Invitation from '@/components/Invitation';
 
-// Solo se generan las 3 rutas conocidas; cualquier otro UUID devuelve 404.
+// Solo se generan las rutas conocidas (ver INVITES en lib/event.js); cualquier otro UUID devuelve 404.
 export const dynamicParams = false;
 
 export function generateStaticParams() {
