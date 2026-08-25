@@ -1,3 +1,6 @@
+'use client';
+
+import { useState } from 'react';
 import { whatsappUrl, whatsappDeclineUrl } from '@/lib/event';
 import Ornament from '@/components/Ornament';
 
@@ -10,6 +13,20 @@ function WhatsAppIcon() {
 }
 
 export default function RsvpSection({ type }) {
+  const [formOpen, setFormOpen] = useState(false);
+  const [name, setName] = useState('');
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    if (!name.trim()) return;
+    window.open(
+      whatsappUrl(type, { name }),
+      '_blank',
+      'noopener,noreferrer'
+    );
+    setFormOpen(false);
+  }
+
   return (
     <section className="relative z-10 bg-gradient-to-b from-transparent via-beige/25 to-transparent px-6 py-24 text-center">
       <div className="reveal">
@@ -26,15 +43,14 @@ export default function RsvpSection({ type }) {
         guardamos un lugar.
       </p>
       <div className="reveal mt-10 flex flex-col items-center gap-4 px-2">
-        <a
-          href={whatsappUrl(type)}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="rsvp-btn inline-flex w-full max-w-[340px] items-center justify-center gap-3 rounded-full bg-gradient-to-r from-gold to-gold-deep px-10 py-[1.1rem] font-smallcaps text-[0.9rem] uppercase tracking-[0.3em] text-paper transition-transform duration-200 active:scale-[0.96] sm:w-auto"
+        <button
+          type="button"
+          onClick={() => setFormOpen(true)}
+          className="rsvp-btn inline-flex w-full max-w-[340px] cursor-pointer items-center justify-center gap-3 rounded-full bg-gradient-to-r from-gold to-gold-deep px-10 py-[1.1rem] font-smallcaps text-[0.9rem] uppercase tracking-[0.3em] text-paper transition-transform duration-200 active:scale-[0.96] sm:w-auto"
         >
           <WhatsAppIcon />
           Confirmar
-        </a>
+        </button>
         <a
           href={whatsappDeclineUrl(type)}
           target="_blank"
@@ -44,6 +60,56 @@ export default function RsvpSection({ type }) {
           Indicar que no voy
         </a>
       </div>
+
+      {formOpen && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-ink/60 px-5 backdrop-blur-sm"
+          onClick={() => setFormOpen(false)}
+        >
+          <div
+            className="w-full max-w-[400px] rounded-3xl bg-paper p-7 text-left shadow-deep"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <Ornament className="mb-2 text-gold" />
+            <h3 className="font-display text-[1.5rem] text-ink">
+              Un dato más y listo
+            </h3>
+            <p className="mt-1 text-[0.9rem] italic text-ink-soft">
+              Así te esperamos con todo preparado.
+            </p>
+            <form onSubmit={handleSubmit} className="mt-5 flex flex-col gap-4">
+              <label className="flex flex-col gap-1.5">
+                <span className="font-smallcaps text-[0.75rem] uppercase tracking-[0.25em] text-gold-deep">
+                  Nombre completo *
+                </span>
+                <input
+                  type="text"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  required
+                  autoFocus
+                  placeholder="Tu nombre y apellido"
+                  className="rounded-xl border border-beige bg-cream px-4 py-3 text-ink outline-none transition-colors focus:border-gold"
+                />
+              </label>
+              <button
+                type="submit"
+                className="mt-1 inline-flex cursor-pointer items-center justify-center gap-3 rounded-full bg-gradient-to-r from-gold to-gold-deep px-10 py-[1rem] font-smallcaps text-[0.85rem] uppercase tracking-[0.3em] text-paper transition-transform duration-200 active:scale-[0.96]"
+              >
+                <WhatsAppIcon />
+                Enviar por WhatsApp
+              </button>
+              <button
+                type="button"
+                onClick={() => setFormOpen(false)}
+                className="cursor-pointer text-center text-[0.85rem] italic text-ink-soft underline-offset-4 hover:underline"
+              >
+                Cancelar
+              </button>
+            </form>
+          </div>
+        </div>
+      )}
     </section>
   );
 }
