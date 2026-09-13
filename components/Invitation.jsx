@@ -37,7 +37,7 @@ export default function Invitation({ type }) {
       {cfg.spotify && <SpotifySection />}
       <PrebodaCarousel />
       {type !== 'misa' && <DressCodeSection />}
-      {type !== 'misa' && <GiftSection />}
+      {type !== 'misa' && type !== 'fiestaPago' && <GiftSection />}
       <AmbientPetals />
       {type !== 'misa' && <RsvpSection type={type} />}
       <SiteFooter />

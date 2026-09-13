@@ -13,9 +13,8 @@ export default function PaymentSection({ amount }) {
       </div>
 
       <p className="reveal mx-auto max-w-[560px] text-center italic leading-relaxed text-ink-soft">
-        ¡Nos encantaría que te sumes a bailar con nosotros! Como te unís después
-        de la cena, te pedimos una colaboración de{' '}
-        <span className="not-italic text-ink">${amount.toLocaleString('es-AR')}</span>{' '}
+        Nos encantaría que vengas a celebrar y bailar con nosotros. El valor de la tarjeta para la fiesta es de 
+        <span className="not-italic text-ink"> ${amount.toLocaleString('es-AR')}</span>{'  '}
         para tu lugar en la fiesta. Gracias por acompañarnos en un día tan
         especial.
       </p>
